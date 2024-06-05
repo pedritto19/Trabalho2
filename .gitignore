@@ -1,7 +1,7 @@
 # Ignorar a pasta lib
 lib/
 
-# Outras regras de ignorar podem ser adicionadas aqui
+
 *.log
 *.tmp
 node_modules/

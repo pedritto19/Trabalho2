@@ -18,25 +18,11 @@
         <p></p>
         <div class="search-container">
             <form action="/search" method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="query" class="search-input">
-                <input type="file" name="image" class="file-input" accept="image/*" onchange="handleFileSelect(event)">
+                <input type="file" name="query" class="file-input" accept="image/*">
                 <button type="submit" class="search-button">Pesquisar</button>
             </form>
         </div>
     </div>
-
-    <script>
-        function handleFileSelect(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.querySelector('.search-input').value = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-    </script>
 </body>
 
 </html>

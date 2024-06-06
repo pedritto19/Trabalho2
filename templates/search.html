@@ -5,101 +5,11 @@
 
 <html lang="en">
 <head>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            color: #000080;
-        }
-
-        .banner {
-            background: linear-gradient(135deg, #87cefa, #4682b4);
-            color: #ffffff;
-            padding: 50px 20px;
-            text-align: center;
-        }
-
-        .banner h1 {
-            font-size: 3em;
-            margin: 0;
-        }
-
-        .banner p {
-            font-size: 1.2em;
-            margin: 10px 0 0;
-        }
-
-        .content {
-            padding: 20px;
-            text-align: center;
-        }
-
-        .button {
-            background-color: #4682b4;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 20px 2px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .button:hover {
-            background-color: #4169e1;
-        }
-
-        .search-container {
-            margin-top: 20px;
-        }
-
-        .search-input {
-            padding: 10px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            width: 300px;
-            display: none; /* Esconde o input de texto */
-        }
-
-        .search-button {
-            padding: 10px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            background-color: #4682b4;
-            color: white;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-
-        .search-button:hover {
-            background-color: #4169e1;
-        }
-
-        .file-input {
-            padding: 10px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            background-color: #4682b4;
-            color: white;
-            cursor: pointer;
-        }
-
-        .file-input:hover {
-            background-color: #4169e1;
-        }
-    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <div class="banner">
     <title>Resultados da Pesquisa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <h1>Resultados da Pesquisa</h1> 
@@ -107,7 +17,9 @@
     <img src="{{ query }}" alt="Imagem da Pesquisa" style="width: 10%; height: 10%;">
     <br>
     <br>
-    <a class="search-button" href="/">Home</a>
+    <form action="/" enctype="multipart/form-data">
+    <button class="search-button" href="/">Home</button>
+    </form>
     </div>
     </div>
 </body>

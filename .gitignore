@@ -15,6 +15,11 @@ venv/lib/python3.11/site-packages/nvidia_nvtx_cu12-12.1.105.dist-info
 venv/lib/python3.11/site-packages/nvidia
 venv/lib/python3.11/site-packages/torch
 venv/lib/python3.11/site-packages/triton
+venv/lib/python3.11/site-packages/tensorflow
+venv/lib/python3.11/site-packages/tensorflow_io_gcs_filesystem
+venv/lib/python3.11/site-packages/tensorflow_io_gcs_filesystem-0.37.0.dist-info
+venv/lib/python3.11/site-packages/tensorflow-2.16.1.dist-info
+trained_model.h5
 
 *.log
 *.tmp

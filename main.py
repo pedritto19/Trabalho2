@@ -46,7 +46,7 @@ def search():
     file = request.files['query']
     
     if file.filename == '':
-        print('sem arquivo')
+        return render_template('search.html', query='none', resultado='sem imagem')
     
     if file:
         # Salvar a imagem carregada

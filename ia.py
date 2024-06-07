@@ -94,7 +94,7 @@ except ImportError:
 data_dir = './data'
 img_height, img_width = 150, 150
 batch_size = 32
-num_classes = 2
+num_classes = 51
 epochs = 25
 
 # Geradores de dados para treinamento e validação

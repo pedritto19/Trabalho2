@@ -37,7 +37,7 @@ dog_breeds = [
     ('Buldogue francês', 'https://panoramapetvet.com.br/wp-content/uploads/2023/08/Design-sem-nome-100.jpg'),
     ('Husky siberiano', 'https://www.petz.com.br/cachorro/racas/husky-siberiano/img/husky-siberiano-caracteristicas-guia-racas.jpg'),
     ('Beagle', 'https://diariodonordeste.verdesmares.com.br/image/contentid/policy:1.3136324:1631737586/beagle-ra%C3%A7a.jpg?f=16x9&$p$f=44393c1'),
-    ('Malamute-do-alasca', 'https://petcare.com.br/wp-content/uploads/2022/11/6-1.jpg')
+    ('Malamute-do-alasca', 'https://petnovitta.com.br/wordpress/wp-content/files/petnovitta.com.br/2023/09/malamute-768x512.png')
 ]
 
 

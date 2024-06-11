@@ -99,7 +99,7 @@ body {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 5 colunas */
+    grid-template-columns: repeat(4, 1fr); /* 5 colunas */
     gap: 20px; /* Espaçamento entre os itens */
     justify-items: center; /* Centraliza os itens horizontalmente */
 }

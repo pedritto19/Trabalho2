@@ -21,6 +21,8 @@ venv/lib/python3.11/site-packages/tensorflow_io_gcs_filesystem-0.37.0.dist-info
 venv/lib/python3.11/site-packages/tensorflow-2.16.1.dist-info
 trained_model.h5
 cavalopintinho.h5
+dog_breed_classifier_final.keras
+dog_breed_classifier.keras
 
 *.log
 *.tmp

@@ -10,13 +10,36 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 
 # Carregar o modelo treinado
-model = load_model('trained_model.h5')
+model = load_model('dog_breed_classifier_final.keras')
 
 # Definir as dimensões da imagem
 img_height, img_width = 150, 150
 
 # Definir o mapeamento das classes
-class_indices = {'cavalo': 0, 'passarinho': 1}
+class_indices = {
+    'Pastor-alemão': 0,
+    'Buldogue': 1,
+    'Labrador retriever': 2,
+    'Golden retriever': 3,
+    'Buldogue francês': 4,
+    'Beagle': 5,
+    'Husky siberiano': 6,
+    'Poodle': 7
+}
+
+
+# Lista de raças e URLs de imagens
+dog_breeds = [
+    ('Pastor-alemão', 'https://www.doglife.com.br/blog/assets/post/pastor-alemao-guia-completo-sobre-a-raca-62e7ecf756767a00fc5ebc9a/pastor-alemao-guia.jpg'),
+    ('Buldogue', 'https://www.blog.dogtripbrasil.com.br/wp-content/uploads/2020/03/BULDOGUE-INGL%C3%8AS.jpg'),
+    ('Labrador retriever', 'https://p2.trrsf.com/image/fget/cf/940/0/images.terra.com/2023/11/29/1147115027-labrador-retriever.jpg'),
+    ('Golden retriever', 'https://www.petz.com.br/blog/wp-content/uploads/2017/06/golden-retriever.jpg'),
+    ('Buldogue francês', 'https://panoramapetvet.com.br/wp-content/uploads/2023/08/Design-sem-nome-100.jpg'),
+    ('Husky siberiano', 'https://www.petz.com.br/cachorro/racas/husky-siberiano/img/husky-siberiano-caracteristicas-guia-racas.jpg'),
+    ('Beagle', 'https://diariodonordeste.verdesmares.com.br/image/contentid/policy:1.3136324:1631737586/beagle-ra%C3%A7a.jpg?f=16x9&$p$f=44393c1'),
+    ('Malamute-do-alasca', 'https://petcare.com.br/wp-content/uploads/2022/11/6-1.jpg')
+]
+
 
 def predict_image(model, image_path, img_height, img_width):
     img = load_img(image_path, target_size=(img_height, img_width))
@@ -36,7 +59,7 @@ def get_class_label(prediction, class_indices):
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('home.html', dog_breeds=dog_breeds)
 
 @app.route('/search', methods=['POST'])
 def search():

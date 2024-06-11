@@ -22,6 +22,17 @@
                 <button type="submit" class="search-button">Pesquisar</button>
             </form>
         </div>
+        <div class="dog-breeds-grid">
+            <h3>Raças de Cachorros</h3>
+            <div class="grid-container">
+                {% for breed, image_url in dog_breeds %}
+                <div class="grid-item">
+                    <img src="{{ image_url }}" alt="{{ breed }}">
+                    <p>{{ breed }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </body>
 

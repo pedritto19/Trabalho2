@@ -74,89 +74,81 @@
 
 
 
-import os
-import numpy as np
 import tensorflow as tf
-import sys
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
+from tensorflow.keras.callbacks import ModelCheckpoint
 
-# Certifique-se de que a biblioteca Pillow está instalada
-try:
-    from PIL import Image
-except ImportError:
-    import subprocess
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "pillow"])
-    from PIL import Image
-
-# Configurações
-data_dir = './data'
-img_height, img_width = 150, 150
+# Definindo os parâmetros
+img_width, img_height = 150, 150
 batch_size = 32
-num_classes = 51
-epochs = 25
+epochs = 50
+num_classes = 8  # Número de classes (raças de cachorro)
 
-# Geradores de dados para treinamento e validação
+# Caminhos para os dados de treino e validação
+train_data_dir = 'data/train'
+validation_data_dir = 'data/validation'
+
+# Pré-processamento das imagens
 train_datagen = ImageDataGenerator(
-    rescale=1.0/255,
-    validation_split=0.2,  # 20% dos dados serão usados para validação
+    rescale=1.0/255.0,
     shear_range=0.2,
     zoom_range=0.2,
     horizontal_flip=True
 )
 
+validation_datagen = ImageDataGenerator(rescale=1.0/255.0)
+
 train_generator = train_datagen.flow_from_directory(
-    data_dir,
-    target_size=(img_height, img_width),
+    train_data_dir,
+    target_size=(img_width, img_height),
     batch_size=batch_size,
-    class_mode='categorical',
-    subset='training'
+    class_mode='categorical'
 )
 
-validation_generator = train_datagen.flow_from_directory(
-    data_dir,
-    target_size=(img_height, img_width),
+validation_generator = validation_datagen.flow_from_directory(
+    validation_data_dir,
+    target_size=(img_width, img_height),
     batch_size=batch_size,
-    class_mode='categorical',
-    subset='validation'
+    class_mode='categorical'
 )
 
-# Construção do modelo
+# Construindo o modelo
 model = Sequential([
-    tf.keras.Input(shape=(img_height, img_width, 3)),
+    tf.keras.Input(shape=(img_width, img_height, 3)),
     Conv2D(32, (3, 3), activation='relu'),
     MaxPooling2D(pool_size=(2, 2)),
+    
     Conv2D(64, (3, 3), activation='relu'),
     MaxPooling2D(pool_size=(2, 2)),
+    
     Conv2D(128, (3, 3), activation='relu'),
     MaxPooling2D(pool_size=(2, 2)),
+    
     Flatten(),
     Dense(512, activation='relu'),
     Dropout(0.5),
     Dense(num_classes, activation='softmax')
 ])
 
-# Compilação do modelo
-model.compile(
-    optimizer='adam',
-    loss='categorical_crossentropy',
-    metrics=['accuracy']
-)
+# Compilando o modelo
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-# Treinamento do modelo
+# Checkpoint para salvar o melhor modelo
+checkpoint = ModelCheckpoint('dog_breed_classifier.keras', monitor='val_loss', save_best_only=True, mode='min')
+
+# Treinando o modelo
 history = model.fit(
     train_generator,
     steps_per_epoch=train_generator.samples // batch_size,
+    epochs=epochs,
     validation_data=validation_generator,
     validation_steps=validation_generator.samples // batch_size,
-    epochs=epochs
+    callbacks=[checkpoint]
 )
 
-# Salvando o modelo treinado
-model.save('trained_model.h5')
+# Salvando o modelo final
+model.save('dog_breed_classifier_final.keras')
 
-# Avaliação do modelo
-loss, accuracy = model.evaluate(validation_generator)
-print(f'Loss: {loss}')
-print(f'Accuracy: {accuracy}')
+print("Modelo treinado e salvo com sucesso!")

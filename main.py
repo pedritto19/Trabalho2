@@ -83,7 +83,7 @@ def search():
         class_label = get_class_label(prediction, class_indices)
         
         # Exibir o resultado
-        resultado = f"A imagem é de um(a): {class_label}"
+        resultado = f"Seu cachorro é da raça {class_label} 💖"
         
         # Converter a imagem para base64
         with open(file_path, "rb") as image_file:

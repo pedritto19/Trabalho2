@@ -64,12 +64,15 @@ def home():
 @app.route('/search', methods=['POST'])
 def search():
     if 'query' not in request.files:
-        return "No file part"
+        return render_template('home.html', dog_breeds=dog_breeds, error="Nenhuma imagem foi selecionada.")
     
     file = request.files['query']
     
     if file.filename == '':
-        return render_template('search.html', query='none', resultado='sem imagem')
+        return render_template('home.html', dog_breeds=dog_breeds, error="Nenhuma imagem foi selecionada.")
+        # Verificar se o arquivo é uma imagem válida
+    if not file.content_type.startswith('image/'):
+        return render_template('home.html', dog_breeds=dog_breeds, error="Selecione uma imagem válida.")
     
     if file:
         # Salvar a imagem carregada

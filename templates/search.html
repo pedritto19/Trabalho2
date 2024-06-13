@@ -1,27 +1,18 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultados da Pesquisa</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <div class="banner">
-        <h1>Resultados da Pesquisa</h1>
-        <div>
-            <img src="{{ query }}" alt="Imagem da Pesquisa" style="width: 300px; height: 300px; object-fit: cover;">
-            <br>
-            <p>{{ resultado }}</p>
-            <br>
-            <form action="/" method="GET">
-                <button class="search-button">Home</button>
-            </form>
-        </div>
+{% extends "base.html" %}
+
+{% block title %}Resultados da Pesquisa{% endblock %}
+
+{% block content %}
+<div class="search-container">
+    <h1>Resultados da Pesquisa</h1>
+    <div>
+        <img src="{{ query }}" alt="Imagem da Pesquisa" style="width: 300px; height: 300px; object-fit: cover;">
+        <br>
+        <p>{{ resultado }}</p>
+        <br>
+        <form action="/" method="GET">
+            <button class="search-button">Home</button>
+        </form>
     </div>
-</body>
-</html>
-
-
-
-
+</div>
+{% endblock %}

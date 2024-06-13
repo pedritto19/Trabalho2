@@ -1,38 +1,24 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Inicial</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+{% block title %}Página Inicial{% endblock %}
 
-<body>
-    <div class="banner">
-        <h1>DOG BREED</h1>
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
-    </div>
-    <div class="content">
-        <h2>Descubra qual a raça do seu cachorro!</h2>
-        <p></p>
-        <div class="search-container">
-            <form action="/search" method="POST" enctype="multipart/form-data">
-                <input type="file" name="query" class="file-input" accept="image/*">
-                <button type="submit" class="search-button">Pesquisar</button>
-            </form>
+{% block content %}
+<h2>Descubra qual a raça do seu cachorro!</h2>
+<p></p>
+<div class="search-container">
+    <form action="/search" method="POST" enctype="multipart/form-data">
+        <input type="file" name="query" class="file-input" accept="image/*">
+        <button type="submit" class="search-button">Pesquisar</button>
+    </form>
+</div>
+<div class="dog-breeds-grid">
+    <div class="grid-container">
+        {% for breed, image_url in dog_breeds %}
+        <div class="grid-item">
+            <img src="{{ image_url }}" alt="{{ breed }}">
+            <p>{{ breed }}</p>
         </div>
-        <div class="dog-breeds-grid">
-            <div class="grid-container">
-                {% for breed, image_url in dog_breeds %}
-                <div class="grid-item">
-                    <img src="{{ image_url }}" alt="{{ breed }}">
-                    <p>{{ breed }}</p>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
+        {% endfor %}
     </div>
-</body>
-
-</html>
+</div>
+{% endblock %}

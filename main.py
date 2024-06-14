@@ -1,6 +1,9 @@
+import psutil
 import os
+import time
 import numpy as np
 import base64
+import gc
 from flask import Flask, render_template, request
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.models import load_model
@@ -8,9 +11,6 @@ from io import BytesIO
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
-
-# Carregar o modelo treinado
-model = load_model('dog_breed_classifier_final.keras')
 
 # Definir as dimensões da imagem
 img_height, img_width = 150, 150
@@ -27,6 +27,10 @@ class_indices = {
     'Poodle': 7
 }
 
+def get_memory_usage():
+    process = psutil.Process(os.getpid())
+    mem_info = process.memory_info()
+    return mem_info.rss / (1024 ** 2) 
 
 # Lista de raças e URLs de imagens
 dog_breeds = [
@@ -40,12 +44,19 @@ dog_breeds = [
     ('Malamute-do-alasca', 'https://petnovitta.com.br/wordpress/wp-content/files/petnovitta.com.br/2023/09/malamute-768x512.png')
 ]
 
-
-def predict_image(model, image_path, img_height, img_width):
+def predict_image(image_path, img_height, img_width):
+    # Carregar o modelo treinado dentro da função
+    model = load_model('dog_breed_classifier_final.keras')
+    
     img = load_img(image_path, target_size=(img_height, img_width))
     img_array = img_to_array(img)
     img_array = np.expand_dims(img_array, axis=0) / 255.0
     prediction = model.predict(img_array)
+    
+    # Limpar o modelo da memória
+    del model
+    gc.collect()
+    
     return prediction
 
 def get_class_label(prediction, class_indices):
@@ -70,7 +81,7 @@ def search():
     
     if file.filename == '':
         return render_template('home.html', dog_breeds=dog_breeds, error="Nenhuma imagem foi selecionada.")
-        # Verificar se o arquivo é uma imagem válida
+    
     if not file.content_type.startswith('image/'):
         return render_template('home.html', dog_breeds=dog_breeds, error="Selecione uma imagem válida.")
     
@@ -80,7 +91,7 @@ def search():
         file.save(file_path)
         
         # Fazer a predição
-        prediction = predict_image(model, file_path, img_height, img_width)
+        prediction = predict_image(file_path, img_height, img_width)
         
         # Obter o rótulo da classe
         class_label = get_class_label(prediction, class_indices)
@@ -101,6 +112,7 @@ def search():
         return render_template('search.html', query=image_data, resultado=resultado)
 
 if __name__ == '__main__': 
+    print(f"Uso de memória: {get_memory_usage():.2f} MB")
     if not os.path.exists(app.config['UPLOAD_FOLDER']):
         os.makedirs(app.config['UPLOAD_FOLDER'])
     os.environ['FLASK_ENV'] = 'development'  

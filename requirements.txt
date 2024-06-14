@@ -45,6 +45,7 @@ optree==0.11.0
 packaging==24.0
 pillow==10.3.0
 protobuf==4.25.3
+psutil==5.9.8
 pyarrow==15.0.0
 Pygments==2.18.0
 pylance==0.12.1

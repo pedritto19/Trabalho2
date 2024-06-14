@@ -112,8 +112,9 @@ def search():
         return render_template('search.html', query=image_data, resultado=resultado)
 
 if __name__ == '__main__': 
+    port = int(os.environ.get('PORT', 5000))
     print(f"Uso de memória: {get_memory_usage():.2f} MB")
     if not os.path.exists(app.config['UPLOAD_FOLDER']):
         os.makedirs(app.config['UPLOAD_FOLDER'])
     os.environ['FLASK_ENV'] = 'development'  
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=port,debug=True)
